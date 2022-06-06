@@ -5,10 +5,11 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>2021-04</RootNamespace>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <None Include="2021-04.txt" CopyToOutputDirectory="Always" />
+        <None Include="../2021-04.txt" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
 </Project>
