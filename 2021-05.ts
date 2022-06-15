@@ -1,3 +1,4 @@
+// Input data is unique to each user
 const input = `414,379 -> 827,379
 683,947 -> 183,947
 156,577 -> 480,577
@@ -512,14 +513,34 @@ class Line {
 	readonly points: Point[] = [];
 
 	constructor(readonly start: Point, readonly end: Point) {
-		if (start.x === end.x) {
+		if (start.x === end.x) { // vertical line
 			for (let y = Math.min(start.y, end.y); y <= Math.max(start.y, end.y); y++) {
 				this.points.push(new Point(start.x, y));
 			}
-		} else if (start.y === end.y) {
+		} else if (start.y === end.y) { // horizontal line
 			for (let x = Math.min(start.x, end.x); x <= Math.max(start.x, end.x); x++) {
 				this.points.push(new Point(x, start.y));
 			}
+		} else if (Math.abs(start.x - end.x) === Math.abs(start.y - end.y)) { // valid diagonal line
+				if (start.x < end.x && start.y < end.y) { // top-left to bottom-right
+					for (let x = start.x, y = start.y; x <= end.x && y <= end.y; x++, y++) {
+						this.points.push(new Point(x, y));
+					}
+				} else if (start.x > end.x && start.y > end.y) { // bottom-right to top-left
+					for (let x = start.x, y = start.y; x >= end.x && y >= end.y; x--, y--) {
+						this.points.push(new Point(x, y));
+					}
+				} else if (start.x < end.x && start.y > end.y) { // bottom-left to top-right
+					for (let x = start.x, y = start.y; x <= end.x && y >= end.y; x++, y--) {
+						this.points.push(new Point(x, y));
+					}
+				} else if (start.x > end.x && start.y < end.y) { // bottom-right to top-left
+					for (let x = start.x, y = start.y; x >= end.x && y <= end.y; x--, y++) {
+						this.points.push(new Point(x, y));
+					}
+				}
+		} else {
+			console.log(`Invalid line: ${start.toString()} -> ${end.toString()}`);
 		}
 	}
 }
@@ -536,11 +557,11 @@ class SeaBed {
 		})
 	}
 
-	draw(): string {
+	draw(range:[[number, number], [number, number]]): string {
 		let output = "";
-		for (let y = 0; y < 100; y++)
+		for (let y = range[0][1]; y < range[1][1]; y++)
 		{
-			for (let x = 0; x < 100; x++) {
+			for (let x = range[0][0]; x < range[1][0]; x++) {
 				output += this.intersections[new Point(x, y).toString()] ?? ".";
 			}
 			output += "\n";
@@ -559,7 +580,7 @@ const parse = (input: string) => input.split('\n')
 
 const lines = parse(input);
 const seabed = new SeaBed(lines);
-console.log(seabed.draw());
+console.log(seabed.draw([[500, 500], [600, 600]])); // [000, 1000] for full seabed
 
 const keys = Object.keys(seabed.intersections);
 const intersections = keys.filter(key => seabed.intersections[key] > 1);
