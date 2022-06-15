@@ -1,20 +1,11 @@
 {
-	"compilerOptions": {
-		"experimentalDecorators": true,
-		"lib": [
-			"DOM"
-		],
-		"module": "ES2015",
-		"moduleResolution": "node",
-		"sourceMap": true,
-		"strict": true,
-		"target": "ES2015",
-		"typeRoots": [
-			"node_modules/@types"
-		]
-	},
-	"exclude": [
-		"dist",
-		"node_modules"
-	]
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist"
+  },
+  "lib": ["es2015"]
 }
