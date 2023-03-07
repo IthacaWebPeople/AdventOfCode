@@ -2273,4 +2273,4 @@ console.log(max);
 
 //----------------------------------------
 
-console.log(Math.max(...input.split("\n\n").map(s => s.split("\n").map(n => parseInt(n)).reduce((prev, curr) => prev + curr))));
+console.log(input.split("\n\n").map(s => s.split("\n").map(n => parseInt(n)).reduce((prev, curr) => prev + curr)).sort((a, b) => b - a).slice(0,3).reduce((p,c)=> p + c));
